@@ -5,7 +5,8 @@ def menu_principal():
     print("""
     Olá, sou o chat desenvolvido pelo Dev João!
     """)
-    while True:
+    executando = True  # Variável de controle para o loop principal
+    while executando:
         cpf = input("Por favor, digite seu CPF: ")
         dados = obter_dados(cpf)
 
@@ -13,15 +14,15 @@ def menu_principal():
             print("\nDados encontrados:")
             for dado in dados:
                 print(dado)
-            menu_opcoes(cpf)
+            executando = menu_opcoes(cpf)  # Se o usuário sair, a execução será interrompida
         else:
             print(f"Nenhum cliente encontrado para o CPF '{cpf}'.")
             if deseja_cadastrar():
                 cadastrar_usuario(cpf)
-                break
+                executando = False  # Encerra o programa após o cadastro
             else:
                 print("\nAté mais e tenha um bom dia!")
-                break
+                executando = False
 
 def menu_opcoes(cpf):
     while True:
@@ -57,7 +58,7 @@ def menu_opcoes(cpf):
             print("Telefone alterado com sucesso")
         elif escolha == "5":
             print("\nAté mais e tenha um bom dia!")
-            break
+            return False  # Indica ao menu principal que o programa deve encerrar
         else:
             print("\nDigite uma opção válida.")
 
@@ -94,7 +95,5 @@ def cadastrar_usuario_novo():
     sleep(2)
     inserir_dados(cpf, nome, data_nasc)
     print(f"Dados incluídos com sucesso, senhor(a) {nome}!")
-
-
 
 menu_principal()
